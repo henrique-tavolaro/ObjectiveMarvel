@@ -24,17 +24,12 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.dsl.module
 
-@RunWith(AndroidJUnit4ClassRunner::class)
 class HomeFragmentTest {
-
-
 
     private val modules = module {
         val repository = FakeRepositoryImpl()
         viewModel{MarvelViewModel(repository)}
     }
-
-
 
     @Before
     fun setup(){

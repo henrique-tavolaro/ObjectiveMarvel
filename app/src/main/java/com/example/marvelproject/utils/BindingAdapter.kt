@@ -1,6 +1,5 @@
 package com.example.marvelproject.utils
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -25,6 +24,5 @@ fun bindingImage(imageView: ImageView, item: Result){
             .circleCrop()
             .placeholder(R.drawable.ic_user_place_holder)
             .into(imageView)
-        Log.d("test", image.toString())
     }
 }

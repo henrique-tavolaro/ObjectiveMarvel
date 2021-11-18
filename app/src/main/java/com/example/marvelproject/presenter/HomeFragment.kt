@@ -1,24 +1,19 @@
 package com.example.marvelproject.presenter
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.transition.Visibility
-import android.util.Log
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.marvelproject.R
 import com.example.marvelproject.databinding.FragmentHomeBinding
 import com.example.marvelproject.domain.repository.Status
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -26,7 +21,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel: MarvelViewModel by viewModel()
     private lateinit var binding: FragmentHomeBinding
-    lateinit var list : List<Int>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +32,6 @@ class HomeFragment : Fragment() {
             container,
             false
         )
-
-
-//        viewModel.searchCharacter("spider")
 
         val editText = binding.etSearch
 
@@ -75,42 +66,32 @@ class HomeFragment : Fragment() {
 
             }
         })
+        val progressBar = binding.progressCircular
 
         viewModel.response.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let {
                 when (it.status) {
                     Status.ERROR -> {
                         Toast.makeText(context, "Ocorreu um erro", Toast.LENGTH_LONG).show()
+                        progressBar.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
                         adapter.submitList(it.data!!.data.results)
+                        progressBar.visibility = View.GONE
                     }
-                    else -> Unit
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                    }
                 }
-            }
-        })
-
-        val progressBar = binding.progressCircular
-
-        viewModel.loading.observe(viewLifecycleOwner, {
-            if (it){
-                progressBar.visibility = View.GONE
-            } else {
-                progressBar.visibility = View.VISIBLE
             }
         })
 
         viewModel.pageNumberList.observe(viewLifecycleOwner, {
             it?.let {
-
                 viewModel.page.observe(viewLifecycleOwner, { page ->
                     val pageAdapter = PageAdapter(it, requireContext(), page)
                     binding.rvPageNumber.adapter = pageAdapter
                 })
-
-
-
-
             }
         })
 

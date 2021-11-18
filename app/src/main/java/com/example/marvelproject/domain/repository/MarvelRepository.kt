@@ -12,6 +12,6 @@ interface MarvelRepository {
         ts: String,
         apikey: String,
         hash: String
-    ) : Flow<Resource<RetrofitResponse>>
+    ) : Flow<Resource<RetrofitResponse?>>
 
 }

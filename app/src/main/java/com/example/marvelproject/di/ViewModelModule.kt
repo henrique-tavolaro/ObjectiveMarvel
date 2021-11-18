@@ -13,7 +13,5 @@ object ViewModelModule {
                 get()
             )
         }
-
     }
-
 }

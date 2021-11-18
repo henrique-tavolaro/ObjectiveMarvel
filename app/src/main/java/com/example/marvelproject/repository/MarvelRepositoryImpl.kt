@@ -18,9 +18,10 @@ class MarvelRepositoryImpl (
         ts: String,
         apikey: String,
         hash: String
-    ): Flow<Resource<RetrofitResponse>> = flow {
+    ): Flow<Resource<RetrofitResponse?>> = flow {
+        emit(Resource.loading(null))
+
         try {
-//            emit(Resource.loading(null))
             val response = retrofitService.search(name, limit, offset, ts, apikey, hash)
             emit(Resource.success(response.body()))
         } catch (e: Exception) {

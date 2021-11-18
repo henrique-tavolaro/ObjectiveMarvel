@@ -1,4 +1,4 @@
-package com.example.marvelproject.model
+package com.example.marvelproject.domain.model
 
 
 import android.os.Parcelable
